@@ -1,0 +1,23 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { SITE } from "../site.config";
+import { formatDate } from "../posts";
+import { url } from "../url";
+
+interface Props {
+  post: CollectionEntry<"blog">;
+}
+const { post } = Astro.props;
+const cover = post.data.heroImage;
+---
+<a class="card" href={url(`blog/${post.id}/`)}>
+  {cover ? <img class="card-cover" src={cover} alt="" loading="lazy" /> : <div class="card-cover" aria-hidden="true" />}
+  <div class="card-body">
+    <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate, SITE.lang)}</time>
+    <h2>{post.data.title}</h2>
+    {post.data.description && <p>{post.data.description}</p>}
+    {post.data.tags.length > 0 && (
+      <div class="pills">{post.data.tags.slice(0, 3).map((t) => <span class="pill">{t}</span>)}</div>
+    )}
+  </div>
+</a>

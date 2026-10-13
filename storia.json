@@ -1,0 +1,19 @@
+{
+  "id": "astro-portada",
+  "name": "Portada",
+  "framework": "astro",
+  "design": "portada",
+  "tier": "free",
+  "description": "Portada con tus últimos artículos, tags y modo oscuro.",
+  "previewUrl": "https://storia-templates.github.io/astro-portada/",
+  "screenshots": [],
+  "features": [
+    "Modo oscuro",
+    "Tags",
+    "Imagen de portada",
+    "Resaltado de código"
+  ],
+  "contentPath": "src/content/blog/{{ slug }}.md",
+  "frontmatterTemplate": "title: \"{{ title }}\"\ndescription: \"{{ excerpt }}\"\npubDate: \"{{ published_at_iso }}\"\ntags: [{{ tags_yaml_array }}]\nheroImage: \"{{ seo_image }}\"\ndraft: false",
+  "pagesBuild": "workflow"
+}

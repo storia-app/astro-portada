@@ -1,0 +1,21 @@
+---
+import Base from "../layouts/Base.astro";
+import Card from "../components/Card.astro";
+import { SITE } from "../site.config";
+import { getPosts } from "../posts";
+
+const posts = await getPosts();
+---
+<Base>
+  <section class="hero wrap">
+    <h1>{SITE.title}</h1>
+    <p>{SITE.description}</p>
+  </section>
+  <section class="wrap">
+    <h2 class="section-title">Últimos artículos</h2>
+    <div class="cards">
+      {posts.map((post) => <Card post={post} />)}
+    </div>
+    {posts.length === 0 && <p>Todavía no hay artículos.</p>}
+  </section>
+</Base>

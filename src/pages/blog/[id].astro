@@ -1,0 +1,28 @@
+---
+import { render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import { SITE } from "../../site.config";
+import { formatDate, getPosts } from "../../posts";
+import { url } from "../../url";
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({ params: { id: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+<Base title={post.data.title} description={post.data.description}>
+  <article class="wrap narrow">
+    <header class="post-header">
+      <div class="pills">
+        {post.data.tags.map((t) => <a class="pill" href={url(`tags/${t}/`)}>{t}</a>)}
+      </div>
+      <h1>{post.data.title}</h1>
+      <time class="meta" datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate, SITE.lang)}</time>
+    </header>
+    {post.data.heroImage && <img class="post-cover" src={post.data.heroImage} alt="" />}
+    <div class="prose"><Content /></div>
+  </article>
+</Base>

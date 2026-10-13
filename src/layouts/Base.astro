@@ -1,0 +1,59 @@
+---
+import "../styles/global.css";
+import { SITE } from "../site.config";
+import { url } from "../url";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const { title, description = SITE.description } = Astro.props;
+const fullTitle = title ? `${title} · ${SITE.title}` : SITE.title;
+---
+<!doctype html>
+<html lang={SITE.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href={url("favicon.svg")} type="image/svg+xml" />
+    <link rel="alternate" type="application/rss+xml" title={SITE.title} href={url("rss.xml")} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <script is:inline>
+      (function () {
+        try {
+          var saved = localStorage.getItem("theme");
+          var dark = saved ? saved === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+          document.documentElement.dataset.theme = dark ? "dark" : "light";
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="site-title" href={url()}>{SITE.title}</a>
+        <nav class="site-nav">
+          <a href={url()}>Inicio</a>
+          <a href={url("tags/")}>Tags</a>
+          <a href={url("rss.xml")}>RSS</a>
+          <button class="theme-toggle" type="button" aria-label="Cambiar tema" id="theme-toggle">◐</button>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">© {new Date().getFullYear()} {SITE.author} · Hecho con Storia</div>
+    </footer>
+    <script is:inline>
+      document.getElementById("theme-toggle").addEventListener("click", function () {
+        var next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+        document.documentElement.dataset.theme = next;
+        try { localStorage.setItem("theme", next); } catch (e) {}
+      });
+    </script>
+  </body>
+</html>
