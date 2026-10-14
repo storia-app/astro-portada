@@ -2,7 +2,7 @@
 
 Portada con tus últimos artículos, tags y modo oscuro.
 
-Plantilla de blog de [Storia](https://github.com/storia-app). Demo: https://storia-templates.github.io/astro-portada/
+Plantilla de blog de [Storia](https://github.com/storia-app). Demo: https://storia-app.github.io/astro-portada/
 
 - Modo oscuro
 - Tags
